@@ -3,6 +3,7 @@ const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
+
 // Schema
 const userSchema = mongoose.Schema({
     name: {
@@ -25,12 +26,18 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
         minLength: 7
+    },
+    avatar: {
+        type: String,
+        required: false
     }
 })
 
 userSchema.pre('save', async function (next) {
-    // Hash the password before saving the user model
     const user = this
+
+    // Hash the password before saving the user model
+    
     if (user.isModified('password')) {
         user.password = await bcrypt.hash(user.password, 8)
     }
