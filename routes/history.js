@@ -1,6 +1,7 @@
 const express = require('express');
 const History = require('../models/History');
 const auth = require('../middleware/auth');
+const log = require('../logging/logger');
 
 const router = express.Router();
 
@@ -18,6 +19,7 @@ router.get('/', auth, async (req, res) => {
       });
   } catch (error) {
     console.log('Catched error');
+    log(error);
     res.status(400).send({ error: 'Something went wrong.' });
   }
 });

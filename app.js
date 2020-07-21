@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const db = require('./config/db');
 const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+
 // Dotenv configuration
 require('dotenv').config();
 
@@ -15,7 +16,7 @@ const port = process.env.PORT || 8300;
 mongoose.Promise = global.Promise;
 
 mongoose
-  .connect(db.mongoURI, {
+  .connect(process.env.DATABASE_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -24,6 +25,10 @@ mongoose
   .catch((err) => debug(err));
 
 //#region Middlewares
+app.use('/', rateLimit({
+  windowMs: process.env.RATE_LIMIT_TIME || 15 * 60 * 1000, // 15 minutes
+  max: process.env.RATE_LIMIT || 100
+}));
 
 // Limiting payload size
 app.use(express.json({ limit: '10kb' }));
