@@ -1,7 +1,7 @@
 const express = require('express');
 const History = require('../models/History');
 const auth = require('../middleware/auth');
-const log = require('../logging/logger');
+const log = require('../logging');
 
 const router = express.Router();
 

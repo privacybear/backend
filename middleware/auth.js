@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const logger = require('../logging');
 
 const auth = async (req, res, next) => {
   try {
@@ -12,4 +13,5 @@ const auth = async (req, res, next) => {
     });
   }
 };
+
 module.exports = auth;

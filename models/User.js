@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const logger = require('../logging');
 
-// Schema
-const userSchema = mongoose.Schema({
+const userSchema = Schema({
   name: {
     type: String,
     required: true,
@@ -17,6 +17,7 @@ const userSchema = mongoose.Schema({
     lowercase: true,
     validate: (value) => {
       if (!validator.isEmail(value)) {
+        logger.danger('Invalid Email address');
         throw new Error({ error: 'Invalid Email address' });
       }
     },
@@ -60,15 +61,15 @@ userSchema.statics.findByCredentials = async (email, password) => {
   // Search for a user by email and password.
   const user = await User.findOne({ email });
   if (!user) {
+    logger.danger('That email does not exist');
     throw 'That email does not exist.';
   }
   const isPasswordMatch = await bcrypt.compare(password, user.password);
   if (!isPasswordMatch) {
+    logger.danger('Wrong password.');
     throw 'Wrong password.';
   }
   return user;
 };
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+module.exports = model('User', userSchema);

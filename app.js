@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
-
+const logger = require('./logging');
 // Dotenv configuration
 require('dotenv').config();
 
@@ -25,10 +25,13 @@ mongoose
   .catch((err) => debug(err));
 
 //#region Middlewares
-app.use('/', rateLimit({
-  windowMs: process.env.RATE_LIMIT_TIME || 15 * 60 * 1000, // 15 minutes
-  max: process.env.RATE_LIMIT || 100
-}));
+app.use(
+  '/',
+  rateLimit({
+    windowMs: process.env.RATE_LIMIT_TIME || 15 * 60 * 1000, // 15 minutes
+    max: process.env.RATE_LIMIT || 100,
+  })
+);
 
 // Limiting payload size
 app.use(express.json({ limit: '10kb' }));
@@ -42,7 +45,14 @@ app.use('/', require('./routes/global'));
 app.use('/users', require('./routes/user'));
 app.use('/history', require('./routes/history'));
 
-app.use(morgan('short'));
+app.use(morgan('tiny'));
+
+app.use((err, req, res, next) => {
+  logger.log(err.message || err);
+
+  res.status(400).send({ err });
+});
+
 //#endregion Middlewares
 
 app.listen(port, debug(`Server started on port: ${port}`));
