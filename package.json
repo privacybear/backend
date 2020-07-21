@@ -6,13 +6,20 @@
   "repository": "https://github.com/privacybear/backend.git",
   "author": "Utkarsh Dubey <utkarsh.dubey3jan@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "node app.js",
+    "watch": "nodemon app.js"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "debug": "^4.1.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.25",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4",
     "silhouettejs": "^1.0.9",
     "validator": "^13.1.1"
   }
