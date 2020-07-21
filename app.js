@@ -51,6 +51,7 @@ app.use(bodyParser.json());
 app.use('/', require('./routes/global'));
 app.use('/users', require('./routes/user'));
 app.use('/history', require('./routes/history'));
+app.use('/block', require('./routes/block'));
 
 app.use(morgan('tiny'));
 
