@@ -28,8 +28,12 @@ mongoose
 app.use(
   '/',
   rateLimit({
-    windowMs: process.env.RATE_LIMIT_TIME || 15 * 60 * 1000, // 15 minutes
-    max: process.env.RATE_LIMIT || 100,
+    windowMs: +process.env.RATE_LIMIT_TIME || 15 * 60 * 1000, // 15 minutes
+    max: +process.env.RATE_LIMIT || 100,
+    onLimitReached: (req, res, options) => {
+      logger.danger('Someone just reached the request limit');
+      debug('Limit reached');
+    },
   })
 );
 
