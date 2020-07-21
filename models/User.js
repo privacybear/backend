@@ -30,6 +30,10 @@ const userSchema = mongoose.Schema({
     avatar: {
         type: String,
         required: false
+    },
+    timestamp: {
+        type: String,
+        default: new Date().getTime()
     }
 })
 

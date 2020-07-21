@@ -26,6 +26,9 @@ mongoose.connect(db.mongoURI, {
 
 // Middlewares
 
+// Limiting payload size
+app.use(express.json({limit: '10kb'}))
+
 // Body parser middleware
 app.use(bodyParser.urlencoded({
     extended: false
@@ -33,8 +36,9 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 // Route configuration
-app.use('/', require('./routes/global'))
-app.use('/users', require('./routes/user.js'))
+app.use('/', require('./routes/global'));
+app.use('/users', require('./routes/user'));
+app.use('/history', require('./routes/history'));
 
 // Server configuration
 const port = process.env.PORT || 8300;
