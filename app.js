@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const logger = require('./logging');
+const cors = require('cors');
 // Dotenv configuration
 require('dotenv').config();
 
@@ -25,6 +26,8 @@ mongoose
   .catch((err) => debug(err));
 
 //#region Middlewares
+app.use(cors());
+
 app.use(
   '/',
   rateLimit({
