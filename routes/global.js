@@ -4,8 +4,6 @@ const auth = require('../middleware/auth');
 const logger = require('../logging');
 
 router.get('/', async (req, res) => {
-  logger.log('Yohoooo');
-  logger.danger('OH SHIT');
   res.send('Hey 👋');
 });
 

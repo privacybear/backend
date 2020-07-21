@@ -1,7 +1,7 @@
 const express = require('express');
 const History = require('../models/History');
 const auth = require('../middleware/auth');
-const log = require('../logging');
+const logger = require('../logging');
 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ router.get('/', auth, async (req, res) => {
       });
   } catch (error) {
     console.log('Catched error');
-    log(error);
+    logger.danger(error);
     res.status(400).send({ error: 'Something went wrong.' });
   }
 });
@@ -41,6 +41,7 @@ router.post('/add', auth, async (req, res) => {
       .send({ status: 'Record created successfully', history: history });
   } catch (error) {
     console.log(error);
+    logger.danger(error);
     res.status(400).send({ error });
   }
 });
@@ -54,13 +55,17 @@ router.delete('/delete/:id', auth, async (req, res) => {
           return res
             .status(400)
             .send({ error: 'No record found for that ID.' });
+        
+        logger.danger(`User: ${req.user._id}, deleted resource ${req.params.id}.`)
         return res
           .status(200)
           .send({ status: 'History deleted successfully.' });
+          
       }
     );
   } catch (error) {
     console.log(error);
+    logger.danger(error);
     return res.status(400).send({ error });
   }
 });
@@ -69,12 +74,15 @@ router.delete('/delete', auth, async (req, res) => {
   try {
     History.deleteMany({ user: req.user._id }).exec(async (err, history) => {
       if (err) return res.status(400).send({ err });
+
+      logger.danger(`User: ${req.user._id}, deleted all resources.`)
       return res
         .status(200)
         .send({ status: 'Deleted all records successfully.' });
     });
   } catch (err) {
-    console.log(error);
+    console.log(err);
+    logger.danger(err);
     return res.status(400).send({ err });
   }
 });
