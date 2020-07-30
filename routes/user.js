@@ -6,6 +6,22 @@ const generateAvatar = require('silhouettejs').generateAvatar;
 
 const router = express.Router();
 
+router.get('/', auth, async (req, res) => {
+  // Fetch user details
+  try {
+    const user = await User.findOne({ _id: req.user._id});
+    if(!user){
+      return res.status(400).send({ error: 'User does not exist.' })
+    }
+    logger.info(`${user.email} just fetched their information.`)
+    return res.status(201).send({ user });
+  } catch (error) {
+    console.log('Catched error');
+    logger.danger(error);
+    res.status(400).send({ error: 'Something weird happened.' });
+  }
+})
+
 router.post('/', async (req, res) => {
   // Create a new user
   try {

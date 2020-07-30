@@ -72,5 +72,22 @@ userSchema.statics.findByCredentials = async (email, password) => {
   return user;
 };
 
+userSchema.statics.changePassword = async (currentPassword, newPassword, usersId) => {
+  const user = await User.findOne({ _id: usersId });
+  if(!user){
+    logger.danger('That user does not exist.')
+    throw "That user doesn't exist."
+  }
+  const isPasswordMatch = await bcrypt.compare(currentPassword, user.password);
+  if(!isPasswordMatch){
+    logger.danger('Wrong password catched while trying to change their password.');
+    throw 'Wrong password.'
+  } else{
+    user.password = newPassword;
+    user.save();
+  }
+  return user;
+}
+
 const User = model('User', userSchema);
 module.exports = User;
