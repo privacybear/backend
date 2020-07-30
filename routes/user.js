@@ -62,7 +62,13 @@ router.post('/login', async (req, res) => {
     }
     const token = await user.generateAuthToken();
     logger.info(`${email} just logged in.`)
-    res.send({ token });
+    const userData = {
+      name: user.name,
+      email: user.email,
+      avatar: user.avatar,
+      timestamp: user.timestamp,
+    }
+    res.send({ user: userData, token });
   } catch (error) {
     console.log(error);
     logger.danger(error);

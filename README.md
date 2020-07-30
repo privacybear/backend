@@ -108,6 +108,12 @@ Takes the following fields in JSON(application/json) and returns the token for a
 Response:
 ```json
 {
+  "user":{
+    "name": ....,
+    "email": .....,
+    "avatar": data:svg,
+    "timestamp": .....,
+  }
   "token": ....
 }
 ```
