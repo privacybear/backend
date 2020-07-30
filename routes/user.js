@@ -20,7 +20,7 @@ router.get('/', auth, async (req, res) => {
       avatar: user.avatar,
       timestamp: user.timestamp,
     }
-    return res.status(201).send({ userData });
+    return res.status(201).send({ user: userData });
   } catch (error) {
     console.log('Catched error');
     logger.danger(error);

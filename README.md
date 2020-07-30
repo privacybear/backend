@@ -65,6 +65,18 @@ This repository contains code for the backend used to power Privacybear.
 Requires the authentication token in header (``Authorization``, ``Bearer YOUR_TOKEN_HERE``) and returns a user object or an error. Fetches User information.
 
 Response:
+```json
+
+{
+  "user": {
+    "name": "Name of the User",
+    "email": "Email address of the User",
+    "avatar": "Avatar of the User",
+    "timestamp": "Timestamp of creation"
+  }
+}
+
+```
 
 ### POST /users
 Takes the following fields in JSON(application/json) and returns the user and token for authentication.
