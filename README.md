@@ -61,6 +61,11 @@ This repository contains code for the backend used to power Privacybear.
 
 ## Routes (User)
 
+### GET /users
+Requires the authentication token in header (``Authorization``, ``Bearer YOUR_TOKEN_HERE``) and returns a user object or an error. Fetches User information.
+
+Response:
+
 ### POST /users
 Takes the following fields in JSON(application/json) and returns the user and token for authentication.
 

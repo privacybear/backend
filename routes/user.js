@@ -14,7 +14,13 @@ router.get('/', auth, async (req, res) => {
       return res.status(400).send({ error: 'User does not exist.' })
     }
     logger.info(`${user.email} just fetched their information.`)
-    return res.status(201).send({ user });
+    const userData = {
+      name: user.name,
+      email: user.email,
+      avatar: user.avatar,
+      timestamp: user.timestamp,
+    }
+    return res.status(201).send({ userData });
   } catch (error) {
     console.log('Catched error');
     logger.danger(error);
