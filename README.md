@@ -154,6 +154,27 @@ Response:
   ]
 }
 ```
+### GET /history/:site (requires token)
+
+Requires the authentication token in header (``Authorization``, ``Bearer YOUR_TOKEN_HERE``) and returns a JSON object with all the records.
+
+Response:
+```json
+{
+  "records": Number of records,
+  "history": [
+    {
+      "permissions": ['LOCATION', 'COOKIES', ...],
+      "timestamp": "1595312359042",
+      "_id": "5f1688e7713f243bdccb3734",
+      "user": "5f167d9c45cbf425c0fda3ff",
+      "site": "Auxin",
+      "url": "https://getauxin.com/"
+    },
+    ...
+  ]
+}
+```
 
 ### POST /history/add (requires token)
 
