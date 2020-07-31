@@ -9,7 +9,7 @@ router.get('/', auth, async (req, res) => {
   // Create a new user
   try {
     History.find({ user: req.user._id })
-      .limit(15)
+      .limit(100)
       .sort({ timestamp: 'desc' })
       .exec(async (err, history) => {
         if (!history)
