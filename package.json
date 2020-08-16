@@ -1,9 +1,6 @@
 {
   "name": "privacybear-backend",
   "version": "1.0.0",
-  "engines": {
-    "node": "14.x"
-  },
   "description": "Backend for privacybear.",
   "main": "app.js",
   "repository": "https://github.com/privacybear/backend.git",
